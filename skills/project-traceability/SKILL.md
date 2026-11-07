@@ -2,7 +2,7 @@
 name: project-traceability
 description: Establish and maintain a critical path of meaning across project purpose, decisions, requirements, architecture, implementation, and verification. Use for project establishment, traceability reviews, impact analysis, and semantic consistency checks.
 metadata:
-  version: "0.3.0"
+  version: "0.3.1"
   status: draft
 ---
 
@@ -203,9 +203,10 @@ When reviewing project work:
 4. Identify connected implementation and evidence.
 5. Trace relationships in both directions.
 6. Evaluate semantic consistency.
-7. Identify missing or conflicting relationships.
-8. Assess consequences of identified gaps.
-9. Recommend the smallest useful correction.
+7. Discover existing execution records for relevant executable verification, including CI runs and check results.
+8. Identify missing or conflicting relationships.
+9. Assess consequences of identified gaps.
+10. Recommend the smallest useful correction.
 
 Do not assume that incomplete traceability means the implementation is incorrect.
 
@@ -246,6 +247,16 @@ Use the following cumulative evidence levels, reporting the highest level actual
 
 These levels describe verification depth, not proof strength. An executed test can still be insufficient to prove an invariant. Non-executable artifacts can be fully assessed at L3; do not require L4 where execution is inapplicable. When a level is not applicable, say why. Do not imply that merely running a test establishes complete coverage.
 
+### 7.3.1 Execution Evidence Discovery
+
+When a finding or coverage claim depends on executable verification, actively search for existing execution evidence **before** concluding that L4 is unavailable. Inspect applicable CI workflow runs, check suites and check runs, job and step conclusions, logs, retained artifacts, and other recorded local or remote verification results. Do not stop at the workflow definition, a pull-request-only run search, or combined commit statuses: these do not exhaust GitHub Actions execution evidence.
+
+Match each execution record to the pinned commit SHA, or document and justify an equivalent revision and its limitations. For each relevant result record the command or check, revision, environment where material, outcome, evidence locator, and the scope of verification actually exercised. Distinguish workflow configuration, a triggered run, a completed job, and successful relevant steps. A successful workflow does not establish that every test or invariant was exercised.
+
+If no execution evidence is obtained, record the discovery surfaces queried and their limitations. Distinguish **not executed (affirmatively established)**, **executed but failed**, **execution evidence inaccessible**, **no matching record found in searched sources**, and **discovery incomplete**. Absence from one search is not proof that execution never occurred. Do not demand new execution when suitable existing evidence is available; do not claim L4 without a verified execution record.
+
+L4 applies only to claims for which execution is relevant. Documentation-only defects and other non-executable semantic findings may be conclusively assessed at L3.
+
 ### 7.4 Finding Evidence Record
 
 Each finding must include: finding ID; claim and classification; source path and precise locator (line range, symbol, test name, or equivalent); target locator if applicable; baseline commit SHA; skill version and source identity; inspected artifact subset; verification level; evidence supporting the claim; contrary evidence or limitations; and the smallest justified action. A shared report header may carry common baseline fields if each finding unambiguously inherits them.
@@ -254,7 +265,7 @@ Distinguish **primary evidence** that directly supports a claim from **supportin
 
 ### 7.5 Coverage Judgment Gate
 
-Before stating coverage completeness, define the denominator: the authoritative set of in-scope semantic obligations, with active/planned/retired lifecycle distinctions. Establish the corresponding in-scope artifact inventory and examine evidence adequacy at the level required by the claim. Reconcile both forward and reverse relationships. State exclusions and unknowns.
+Before stating coverage completeness, complete applicable execution evidence discovery under Section 7.3.1 and define the denominator: the authoritative set of in-scope semantic obligations, with active/planned/retired lifecycle distinctions. Establish the corresponding in-scope artifact inventory and examine evidence adequacy at the level required by the claim. Reconcile both forward and reverse relationships. State exclusions and unknowns.
 
 If these prerequisites are incomplete, report **coverage not established** or **coverage partially evaluated**, and restrict conclusions to the inspected subset. Never turn absence from a sample into a claim that implementation or verification is missing. Missing traceability, broken locators, and absent implementation or verification remain distinct categories.
 
@@ -319,6 +330,7 @@ For traceability reviews, report:
 - Reproducible baseline (commit SHA and exact skill source/version)
 - Exact scoped artifact inventory and exclusions
 - Verification level and provenance for every finding
+- Execution evidence discovery sources, matched runs/checks, outcomes, and access limitations where applicable
 - Coverage denominator, evidence adequacy, and judgment eligibility
 
 - Scope and authoritative sources
