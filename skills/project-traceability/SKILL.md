@@ -2,7 +2,7 @@
 name: project-traceability
 description: Establish and maintain a critical path of meaning across project purpose, decisions, requirements, architecture, implementation, and verification. Use for project establishment, traceability reviews, impact analysis, and semantic consistency checks.
 metadata:
-  version: "0.2.0"
+  version: "0.3.0"
   status: draft
 ---
 
@@ -224,7 +224,41 @@ When a semantic element or concrete artifact changes:
 
 Avoid automatically invalidating every connected artifact.
 
-## 7. Validation Criteria
+## 7. Reproducible Evidence Protocol
+
+### 7.1 Baseline Identity
+
+Before evaluating traceability, record the repository URL, branch or ref, resolved commit SHA, exact methodology version, and the methodology source (path plus commit SHA or content hash where available). A branch name alone is not a reproducible baseline. If the exact skill source is unavailable, mark the review as provisional and do not claim full methodology conformance.
+
+### 7.2 Artifact Inventory
+
+Establish the population of artifacts relevant to the declared scope before making a coverage judgment. Record the exact paths inspected, their role and revision, relevant exclusions, and discovery method. Distinguish a complete scoped inventory from selected or sampled artifacts. Record additions and omissions discovered during the review. A partial inventory supports local findings but not repository-wide coverage claims.
+
+### 7.3 Verification Levels
+
+Use the following cumulative evidence levels, reporting the highest level actually established for each finding:
+
+- **L0 — Reported:** Claim or locator supplied, not independently inspected.
+- **L1 — Located:** Source reference or evidence locator found in an inspected artifact.
+- **L2 — Resolved:** Referenced target exists at the pinned revision; locator is accurate.
+- **L3 — Semantically examined:** Target contents, assertions, and relationship to the claimed contract inspected; scope and limitations recorded.
+- **L4 — Executed:** Relevant verification executed against the pinned revision, with command, environment where material, result, and output reference recorded.
+
+These levels describe verification depth, not proof strength. An executed test can still be insufficient to prove an invariant. Non-executable artifacts can be fully assessed at L3; do not require L4 where execution is inapplicable. When a level is not applicable, say why. Do not imply that merely running a test establishes complete coverage.
+
+### 7.4 Finding Evidence Record
+
+Each finding must include: finding ID; claim and classification; source path and precise locator (line range, symbol, test name, or equivalent); target locator if applicable; baseline commit SHA; skill version and source identity; inspected artifact subset; verification level; evidence supporting the claim; contrary evidence or limitations; and the smallest justified action. A shared report header may carry common baseline fields if each finding unambiguously inherits them.
+
+Distinguish **primary evidence** that directly supports a claim from **supporting evidence** that corroborates only part of it. Explicitly label inferred relationships. Record exact commands and results for execution claims. If a claim cannot be independently verified, mark it unresolved rather than confirmed.
+
+### 7.5 Coverage Judgment Gate
+
+Before stating coverage completeness, define the denominator: the authoritative set of in-scope semantic obligations, with active/planned/retired lifecycle distinctions. Establish the corresponding in-scope artifact inventory and examine evidence adequacy at the level required by the claim. Reconcile both forward and reverse relationships. State exclusions and unknowns.
+
+If these prerequisites are incomplete, report **coverage not established** or **coverage partially evaluated**, and restrict conclusions to the inspected subset. Never turn absence from a sample into a claim that implementation or verification is missing. Missing traceability, broken locators, and absent implementation or verification remain distinct categories.
+
+## 8. Validation Criteria
 
 Evaluate:
 
@@ -244,7 +278,7 @@ Evaluate:
 
 **Proportionality:** Is the traceability effort justified by its value?
 
-## 8. Project Adaptation
+## 9. Project Adaptation
 
 ### Small Libraries
 
@@ -268,7 +302,7 @@ Preserve relationships among observations, proposals, decisions, authority, scop
 
 Do not confuse an observation with an accepted decision.
 
-## 9. Integration with Knowledge Management
+## 10. Integration with Knowledge Management
 
 This skill operates under the Knowledge Management and Promotion skill.
 
@@ -278,9 +312,14 @@ Knowledge management governs consolidation, acceptance, promotion, portability, 
 
 Do not automatically promote traceability findings into authoritative project knowledge.
 
-## 10. Output Requirements
+## 11. Output Requirements
 
 For traceability reviews, report:
+
+- Reproducible baseline (commit SHA and exact skill source/version)
+- Exact scoped artifact inventory and exclusions
+- Verification level and provenance for every finding
+- Coverage denominator, evidence adequacy, and judgment eligibility
 
 - Scope and authoritative sources
 - Relevant critical path of meaning
@@ -292,7 +331,7 @@ For traceability reviews, report:
 
 For skill revisions, produce the complete updated Markdown source and a separate change summary.
 
-## 11. Boundaries
+## 12. Boundaries
 
 This skill does not:
 
@@ -305,7 +344,7 @@ This skill does not:
 - Make authoritative decisions on behalf of the user.
 - Treat documentation quantity as a measure of quality.
 
-## 12. Success Criteria
+## 13. Success Criteria
 
 Traceability succeeds when:
 
@@ -317,3 +356,4 @@ Traceability succeeds when:
 6. Historical evolution is not mistaken for original intent.
 7. Documentation remains proportional to project needs.
 8. Project knowledge remains portable and reviewable.
+9. Every coverage judgment is reproducible from a pinned baseline and recorded evidence.
