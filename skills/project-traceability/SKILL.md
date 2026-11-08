@@ -3,7 +3,7 @@ name: project-traceability
 description: Establish and maintain a critical path of meaning across project purpose, decisions, requirements, architecture, implementation, and verification. Use for project establishment, traceability reviews, impact analysis, and semantic consistency checks.
 metadata:
   version: "0.3.1"
-  status: draft
+  status: stable
 ---
 
 # Project Traceability
