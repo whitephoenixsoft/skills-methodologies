@@ -2,7 +2,7 @@
 name: cross-project-collaboration
 description: Coordinate bounded work across projects, conversations, humans, and independent AI systems when context, visibility, ownership, or authority differs. Use for collaboration setup, outgoing and return handoffs, clarification, exceptions, verification, and reconciliation.
 metadata:
-  version: "0.1.0"
+  version: "0.1.1"
   status: draft
 ---
 
@@ -171,6 +171,8 @@ A return handoff MUST include:
 - **Open items:** Remaining questions, risks, dependencies, and blockers.
 - **Requested reconciliation:** What the originator or authority owner needs to decide or do next.
 
+For material external research claims, the return handoff MUST provide resolvable source references when available. Include sufficient identifying details (for example, title, author, publication, and DOI or URL) for the originator to locate and assess the source. If a material source is unavailable, inaccessible, or not independently verified, the executor MUST disclose that limitation. This requirement does not mandate citations for every incidental background statement.
+
 A return MAY contain no recommendation when evidence is insufficient.
 
 A report of success MUST state what succeeded and under what conditions; it MUST NOT imply unperformed validation or broader applicability.
@@ -178,6 +180,8 @@ A report of success MUST state what succeeded and under what conditions; it MUST
 ## 12. Reconciliation and Closure
 
 The originator or designated reviewer MUST examine the return against the original objective and completion criteria, including material revisions.
+
+**Deliverable reconciliation and authoritative decisions are distinct.** An originator MAY accept and reconcile delegated work within their assigned responsibility without seeking separate approval from the authority owner merely to acknowledge satisfactory completion. Acceptance of a research report, experiment, or implementation deliverable does not approve its recommendations or authorize changes to governed requirements, architecture, policy, or other authoritative artifacts. Consequential project decisions MUST be referred to the designated authority owner unless the originator already holds that authority. If ownership or decision authority is unclear, record the ambiguity and seek clarification before making the consequential change.
 
 The reconciliation result MUST be one of:
 
@@ -318,7 +322,7 @@ Disposition: Accepted | Revision requested | Rejected | Deferred
 ## Closure Status
 ```
 
-## 16. Version 0.1.0 Evaluation Plan
+## 16. Evaluation Plan and Evidence (v0.1.1)
 
 Exercise this skill with three bounded scenarios:
 
@@ -335,11 +339,20 @@ Evaluate whether each collaboration:
 - Produces an actionable return handoff.
 - Ends with an explicit reconciliation decision or unresolved owner.
 
+### Evaluation record — MRD-RESEARCH-002-R1 (2026-11-08)
+
+- **Basis:** Executor and originator reports for a bounded independent research handoff, reviewed against draft v0.1.0 at commit `2d210dfdc4291fa0754b683e499d867a255eeec3`.
+- **Observed success:** Self-contained handoff; acceptance, research execution, and return kept distinct; scope and authority boundaries preserved; MRD-001 shared-cause false positive retained as reported evidence; MRD-002 explicitly not executed; reconciliation not presumed from executor completion.
+- **Coverage:** Partial coverage of scenario 1 only. Research was returned to its originator, not an experiment run delivered directly to Relationship Graph Architecture. Scenarios 2 and 3 remain untested.
+- **Observed improvement:** External research references were not sufficiently resolvable for formal follow-up; clarify source identification requirements.
+- **Observed ambiguity:** Clarify that an originator can reconcile delegated deliverables within assigned responsibility without acquiring authority to approve consequential project changes.
+- **Disposition:** One successful receive/execute/return case, partial evaluation coverage; skill remains **draft**. Do not infer full lifecycle validation or completed evaluation-plan coverage.
+
 Revise the skill from observed failures and unnecessary overhead rather than speculative orchestration requirements.
 
 ## 17. Deferred Capabilities
 
-Not required in version 0.1.0:
+Not required in version 0.1.1:
 
 - Automated agent routing or delegation.
 - Global task or dependency registry.
